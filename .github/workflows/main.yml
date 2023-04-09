@@ -1,0 +1,45 @@
+on:
+  push:
+    branches:
+      - main
+
+name: 🚀 Deploy Laravel app
+
+jobs:
+  deploy:
+    name: FTP Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check PHP version
+        run: php -v
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, pdo_mysql, exif, pcntl, bcmath, gd, zip
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: Copy Env File
+        run: cp .env.example .env
+
+      - name: Generate Key
+        run: php artisan key:generate
+
+      # - name: Run Tests
+      #   run: php artisan test
+
+      - name: 📂 Deploy code
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.MST_CICD_FTP_SERVER }}
+          username: ${{ secrets.MST_CICD_USER_NAME }}
+          password: ${{ secrets.MST_CICD_PASS }}
+          server-dir: /public_html/
+          timeout: 999999
