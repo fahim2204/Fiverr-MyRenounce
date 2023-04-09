@@ -24,7 +24,7 @@ jobs:
           extensions: mbstring, pdo_mysql, exif, pcntl, bcmath, gd, zip
 
       - name: Install Dependencies
-        run: composer install --no-scripts
+        run: composer install
 
       - name: Copy Env File
         run: cp .env.live .env

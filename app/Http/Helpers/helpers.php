@@ -136,8 +136,9 @@ function removeFile($path)
 
 function activeTemplate($asset = false)
 {
-    $general = GeneralSetting::first(['active_template']);
-    $template = $general->active_template;
+    // $general = GeneralSetting::first(['active_template']);
+    // $template = $general->active_template;
+    $template = "basic";
     $sess = session()->get('template');
     if (trim($sess)) {
         $template = $sess;
