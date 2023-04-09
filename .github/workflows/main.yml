@@ -27,7 +27,7 @@ jobs:
         run: composer install
 
       - name: Copy Env File
-        run: cp .env.example .env
+        run: cp .env.live .env
 
       - name: Generate Key
         run: php artisan key:generate
@@ -38,8 +38,8 @@ jobs:
       - name: 📂 Deploy code
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.MST_CICD_FTP_SERVER }}
-          username: ${{ secrets.MST_CICD_USER_NAME }}
-          password: ${{ secrets.MST_CICD_PASS }}
+          server: ${{ secrets.CICD_FTP_SERVER }}
+          username: ${{ secrets.CICD_USER_NAME }}
+          password: ${{ secrets.CICD_PASS }}
           server-dir: /public_html/
           timeout: 999999
